@@ -61,3 +61,8 @@ Here are my thoughts or lessons learned from the puzzles.
 
 Pretty simple problem. I've found over the years that many of the AOC puzzles sort of demand what I'll call "curosr
 management" in that loops often need to consider multiple indexes while iterating over collections.
+
+#### Day 2 ([puzzle](https://adventofcode.com/2021/day/2), [solution](./src/solution/day02.js))
+
+This was also simple, a pretty straight-forward coordinates-in-space problem. I considered implementing the position
+as Value Objects but the stakes here are low here I just went for direct state manipulation.
