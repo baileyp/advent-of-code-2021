@@ -66,3 +66,11 @@ management" in that loops often need to consider multiple indexes while iteratin
 
 This was also simple, a pretty straight-forward coordinates-in-space problem. I considered implementing the position
 as Value Objects but the stakes here are low here I just went for direct state manipulation.
+
+#### Day 3 ([puzzle](https://adventofcode.com/2021/day/3), [solution](./src/solution/day03.js))
+
+My entire career has been web development so really the only time I've every done work with binary math is in a test,
+academic, or puzzle environment such as this. Suffice to say, I'm not great at it and the challenge this puzzle
+presented shows it. I ended up writing a lot of code, which is a mix of binary math and just manipulating the binary
+numbers as strings directly. Did my best to write sensible functions and symbol names, so although it's a lot of code
+I think it's pretty easy to follow.

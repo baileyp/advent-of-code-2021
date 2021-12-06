@@ -26,13 +26,80 @@ function binaryListToPolarityArray(binaryList) {
   return counts.reverse();
 }
 
+/**
+ * Iteratively apply the Oxygen Generator Rating criteria to a list of binary numbers to calculate the rating
+ *
+ * @param {string[]}  binaryList  An array of binary numbers as strings
+ * @returns {number}              The final rating value
+ */
+function determineOxygenGeneratorRating(binaryList) {
+  let bitPosition = 1;
+  let filteredReport = applyOxygenGeneratorBitCriteria(binaryList, 0);
+  while (filteredReport.length > 1) {
+    filteredReport = applyOxygenGeneratorBitCriteria(filteredReport, bitPosition);
+    bitPosition += 1;
+  }
+
+  return parseInt(filteredReport.pop(), 2);
+}
+
+/**
+ * Iteratively apply the CO2 Scrubber Rating criteria to a list of binary numbers to calculate the rating
+ *
+ * @param {string[]}  binaryList  An array of binary numbers as strings
+ * @returns {number}              The final rating value
+ */
+function determineCO2ScrubberRating(binaryList) {
+  let bitPosition = 1;
+  let filteredReport = applyCO2ScrubberBitCriteria(binaryList, 0);
+  while (filteredReport.length > 1) {
+    filteredReport = applyCO2ScrubberBitCriteria(filteredReport, bitPosition);
+    bitPosition += 1;
+  }
+  return parseInt(filteredReport.pop(), 2);
+}
+
+/**
+ * Given a list of binary numbers, apply the Oxygen Generator Rating criteria
+ *
+ * @param {string[]}  binaryList  An array of binary numbers as strings
+ * @param {number}    bitOffset   An offset used to inspect the binary numbers where zero is the nth bit
+ * @returns {string[]}
+ */
+function applyOxygenGeneratorBitCriteria(binaryList, bitOffset = 0) {
+  const counts = binaryListToPolarityArray(binaryList);
+
+  return binaryList.filter(binaryNumber => {
+    const countAtPosition = counts[bitOffset];
+    const mostCommonBit = countAtPosition < 0 ? '0' : '1'
+    return binaryNumber[bitOffset] === mostCommonBit;
+  });
+}
+
+/**
+ * Given a list of binary numbers, apply the CO2 Scrubber Rating criteria
+ *
+ * @param {string[]}  binaryList  An array of binary numbers as strings
+ * @param {number}    bitOffset   An offset used to inspect the binary numbers where zero is the nth bit
+ * @returns {string[]}
+ */
+function applyCO2ScrubberBitCriteria(binaryList, bitOffset = 0) {
+  const counts = binaryListToPolarityArray(binaryList);
+
+  return binaryList.filter(binaryNumber => {
+    const countAtPosition = counts[bitOffset];
+    const leastCommonBit = countAtPosition < 0 ? '1' : '0'
+    return binaryNumber[bitOffset] === leastCommonBit;
+  });
+}
+
 module.exports = {
   /**
-   * O(n * w) time and O(w) space where n is the quantity of numbers in the report and w is the width of the
+   * O(n * w) time and O(n + w) space where n is the quantity of numbers in the report and w is the width of the
    * binary numbers in the report
    *
-   * @param {string} input
-   * @returns {number}
+   * @param {string} input  Each line is a binary number
+   * @returns {number}      The power consumption of the submarine
    */
   part1: function(input) {
     const diagnosticReport = input.split("\n");
@@ -46,7 +113,19 @@ module.exports = {
     return gammaRate * epsilonRate;
   },
 
+  /**
+   * O(n * w) time and O(n + w) space where n is the quantity of numbers in the report and w is the width of the
+   * binary numbers in the report
+   *
+   * @param {string} input  Each line is a binary number
+   * @returns {number}      The life support rating of the submarine
+   */
   part2: function(input) {
     const diagnosticReport = input.split("\n");
+
+    const oxygenGeneratorRating = determineOxygenGeneratorRating(diagnosticReport);
+    const co2ScrubberRating = determineCO2ScrubberRating(diagnosticReport);
+
+    return oxygenGeneratorRating * co2ScrubberRating;
   }
 };
