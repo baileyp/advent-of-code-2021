@@ -74,3 +74,9 @@ academic, or puzzle environment such as this. Suffice to say, I'm not great at i
 presented shows it. I ended up writing a lot of code, which is a mix of binary math and just manipulating the binary
 numbers as strings directly. Did my best to write sensible functions and symbol names, so although it's a lot of code
 I think it's pretty easy to follow.
+
+#### Day 4 ([puzzle](https://adventofcode.com/2021/day/4), [solution](./src/solution/day04.js))
+
+I didn't find this too difficult but I can't pretend my solution is optimal. Still, it was easy to visualize, so I just
+typed out my first mental model of the problem and it worked like a charm. It's perhaps a little brute-forcey, but I
+don't mind since it runs fast and the code is easy to understand.
