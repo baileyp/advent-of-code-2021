@@ -77,3 +77,19 @@ I think it's pretty easy to follow.
 I didn't find this too difficult but I can't pretend my solution is optimal. Still, it was easy to visualize, so I just
 typed out my first mental model of the problem and it worked like a charm. It's perhaps a little brute-forcey, but I
 don't mind since it runs fast and the code is easy to understand.
+
+#### Day 5 ([puzzle](https://adventofcode.com/2021/day/5), [solution](./src/solution/day05.js))
+
+I think the only "trick" to this one was the correct algorithm for determining all the coordinates covered by a line,
+having been defined as just a start and an end. The rest was a simple mapping of coordinate to count. I was a little
+frustrated by not being able to use object literals as fungible keys. For example:
+
+```js
+const foo = new Map();
+foo.set({}, 1);
+foo.set({}, foo.get({}, 1) + 1);
+```
+
+My expectation here is that the map has a single key of `{}` with a value of `2` but that's not what happens (you can
+run it yourself to see the real result) which forced me to convert my point objects to a string to get the fungible
+key behavior I needed. Anybody reading this who knows a different trick here, I'd love to know.
