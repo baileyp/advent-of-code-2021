@@ -1,3 +1,5 @@
+const { DefaultMap } = require('../lib/classes');
+
 /**
  * Parse the input into sets of coordinate points
  *
@@ -69,14 +71,11 @@ function fillLines(lines, excludeDiagonals = true) {
  * @returns {Map<string, number>}
  */
 function plotPoints(plottedLines) {
-  const plottedPoints = new Map();
+  const plottedPoints = new DefaultMap(() => 0);
 
   plottedLines.forEach(plottedLine => {
     plottedLine.forEach(point => {
       const key = `${point.x},${point.y}`;
-      if (!plottedPoints.has(key)) {
-        plottedPoints.set(key, 0);
-      }
       plottedPoints.set(key, plottedPoints.get(key) + 1);
     });
   });
