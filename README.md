@@ -93,3 +93,10 @@ foo.set({}, foo.get({}, 1) + 1);
 My expectation here is that the map has a single key of `{}` with a value of `2` but that's not what happens (you can
 run it yourself to see the real result) which forced me to convert my point objects to a string to get the fungible
 key behavior I needed. Anybody reading this who knows a different trick here, I'd love to know.
+
+#### Day 6 ([puzzle](https://adventofcode.com/2021/day/6), [solution](./src/solution/day06.js))
+
+I've done enough Advent of Code puzzles to know that when the puzzle description includes a word like "exponential" in
+**bold** to know that a naive solution will probably work for part 1, but not for part 2, such as modeling a list of
+all fish. This instinct not only turned out to be correct but drove me to think about the problem a little deeper, and I
+ended up with a pretty tidy solution that runs in linear time and consumes constant space.
