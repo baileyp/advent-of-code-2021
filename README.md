@@ -100,3 +100,17 @@ I've done enough Advent of Code puzzles to know that when the puzzle description
 **bold** to know that a naive solution will probably work for part 1, but not for part 2, such as modeling a list of
 all fish. This instinct not only turned out to be correct but drove me to think about the problem a little deeper, and I
 ended up with a pretty tidy solution that runs in linear time and consumes constant space.
+
+#### Day 7 ([puzzle](https://adventofcode.com/2021/day/7), [solution](./src/solution/day07.js))
+
+Maths! I admit I got a little lucky aided in part by a little intuition. This just *felt* like a math problem and
+guessed that the ideal position was the arithmetic median, so I typed that up, ran it, and turns out I was right. 
+
+When I got to part two it was clear that the average, or arithmetic mean, was the answer for the ideal position. Well,
+at least that's what I thought. It then occurred to me that the average was probably a decimal and either of that the
+two adjacent integers were likely to be the ideal position, so I'd just have to calculate for both and return the
+smaller result.
+
+The last trick was efficiently getting the fuel consumption per crab submarine, the name for of which I didn't immediately
+remember but [found](https://math.stackexchange.com/questions/593318/factorial-but-with-addition/593323) by googling
+"math factorial but addition."

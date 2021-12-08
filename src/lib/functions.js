@@ -20,5 +20,40 @@ module.exports = {
     for (let i = from; i <= to; i += step) {
       yield i;
     }
+  },
+
+  /**
+   * Calculate the arithmetic median of a list of numbers
+   *
+   * @param {number[]}  numbers
+   * @returns {number}
+   */
+  median: function(numbers) {
+    numbers.sort((a, b) => a - b);
+    const half = Math.floor(numbers.length / 2);
+
+    return (numbers.length % 2)
+      ? numbers[half]
+      : (numbers[half - 1] + numbers[half]) / 2.0;
+  },
+
+  /**
+   * Calculate the arithmetic mean of a list of numbers
+   *
+   * @param {number[]}  numbers
+   * @returns {number}
+   */
+  mean: function(numbers) {
+    return numbers.reduce(module.exports.sum) / numbers.length;
+  },
+
+  /**
+   * Calculate a triangle number
+   *
+   * @param {number} num
+   * @returns {number}
+   */
+  triangleNumber: function (num) {
+    return (num * (num + 1)) / 2;
   }
 }
