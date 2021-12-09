@@ -9,6 +9,15 @@ module.exports = {
   sum: (carry, value) => carry + value,
 
   /**
+   * Reducer function that multiplies values
+   *
+   * @param {number}  carry   The running product
+   * @param {number}  value   The new value
+   * @returns {number}        Multiplied total of all values
+   */
+  product: (carry, value) => carry * value,
+
+  /**
    * Create a Generator representing an incrementing range of numbers
    *
    * @param {number}  from  Bottom of the range, inclusive
@@ -55,5 +64,37 @@ module.exports = {
    */
   triangleNumber: function (num) {
     return (num * (num + 1)) / 2;
+  },
+
+  /**
+   * Find the cartesian neighbors of a given coordinate point
+   *
+   * @param {number}  column  Or 'x' in traditional grid systems
+   * @param {number}  row     Or 'y' in traditional grid systems
+   * @returns {Generator<{column: number, row: number}, void, *>}
+   */
+  neighbors: function*(column, row) {
+    for (let colOffset = column - 1; colOffset <= column + 1; colOffset++) {
+      for (let rowOffset = row - 1; rowOffset <= row + 1; rowOffset++) {
+        if (colOffset === column && rowOffset === row) {
+          continue;
+        }
+        yield { column: colOffset, row: rowOffset };
+      }
+    }
+  },
+
+  /**
+   * Find just the cardinal cartesian neighbors of a given coordinate point
+   *
+   * @param {number}  column  Or 'x' in traditional grid systems
+   * @param {number}  row     Or 'y' in traditional grid systems
+   * @returns {Generator<{column: number, row}, void, *>}
+   */
+  cardinalNeighbors: function* (column, row) {
+    yield { column: column - 1, row };
+    yield { column: column + 1, row };
+    yield { column, row: row - 1 };
+    yield { column, row: row + 1 };
   }
 }

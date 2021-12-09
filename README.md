@@ -125,3 +125,18 @@ It took a bit of time to figure out what approach I wanted to take, but it seeme
 comparison, and this is yet another area where JavaScript's standard library let me down. I don't think I should have to
 write my own class or functions for things like union, intersection, and difference of sets. Still, it was the approach
 that made the most sense to me, so I [implemented my own class](./src/lib/classes.js#L24) for it.
+
+#### Day 9 ([puzzle](https://adventofcode.com/2021/day/9), [solution](./src/solution/day09.js))
+
+I enjoyed this, even if it was a bit simple. Or maybe I've just become accustomed to the demands of coordinate-based
+puzzles? Either way, I was not stumped along the way but felt again frustrated as I did in Day 5 by not being able to
+use object literals as fungible values.
+
+```js
+const foo = new Set();
+foo.add({});
+foo.add({});
+// foo.size === 2
+```
+
+This doing what *I* want it to would make me happy.
