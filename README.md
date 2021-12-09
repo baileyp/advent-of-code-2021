@@ -114,3 +114,14 @@ smaller result.
 The last trick was efficiently getting the fuel consumption per crab submarine, the name for of which I didn't immediately
 remember but [found](https://math.stackexchange.com/questions/593318/factorial-but-with-addition/593323) by googling
 "math factorial but addition."
+
+#### Day 8 ([puzzle](https://adventofcode.com/2021/day/8), [solution](./src/solution/day08.js))
+
+If you summed up my time working on this puzzle, I'd say about 30% reading and re-reading the requirements, 5% working
+on part one, and 65% working on part two. There was definitely a lot of material to take in here, and part one was so
+simple and ignored most of the puzzle input, I braced myself for part two.
+
+It took a bit of time to figure out what approach I wanted to take, but it seemed clear this was going to involve set
+comparison, and this is yet another area where JavaScript's standard library let me down. I don't think I should have to
+write my own class or functions for things like union, intersection, and difference of sets. Still, it was the approach
+that made the most sense to me, so I [implemented my own class](./src/lib/classes.js#L24) for it.
