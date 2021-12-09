@@ -56,7 +56,7 @@ Here are my thoughts or lessons learned from the puzzles.
 
 #### Day 1 ([puzzle](https://adventofcode.com/2021/day/1), [solution](./src/solution/day01.js))
 
-Pretty simple problem. I've found over the years that many of the AOC puzzles sort of demand what I'll call "curosr
+Pretty simple problem. I've found over the years that many of the AOC puzzles sort of demand what I'll call "cursor
 management" in that loops often need to consider multiple indexes while iterating over collections.
 
 #### Day 2 ([puzzle](https://adventofcode.com/2021/day/2), [solution](./src/solution/day02.js))
@@ -66,7 +66,7 @@ as Value Objects but the stakes here are low here I just went for direct state m
 
 #### Day 3 ([puzzle](https://adventofcode.com/2021/day/3), [solution](./src/solution/day03.js))
 
-My entire career has been web development so really the only time I've every done work with binary math is in a test,
+My entire career has been web development so really the only time I've ever done work with binary math is in a test,
 academic, or puzzle environment such as this. Suffice to say, I'm not great at it and the challenge this puzzle
 presented shows it. I ended up writing a lot of code, which is a mix of binary math and just manipulating the binary
 numbers as strings directly. Did my best to write sensible functions and symbol names, so although it's a lot of code
@@ -107,7 +107,7 @@ Maths! I admit I got a little lucky aided in part by a little intuition. This ju
 guessed that the ideal position was the arithmetic median, so I typed that up, ran it, and turns out I was right. 
 
 When I got to part two it was clear that the average, or arithmetic mean, was the answer for the ideal position. Well,
-at least that's what I thought. It then occurred to me that the average was probably a decimal and either of that the
+at least that's what I thought. It then occurred to me that the average was probably a decimal and either of the
 two adjacent integers were likely to be the ideal position, so I'd just have to calculate for both and return the
 smaller result.
 
@@ -125,6 +125,9 @@ It took a bit of time to figure out what approach I wanted to take, but it seeme
 comparison, and this is yet another area where JavaScript's standard library let me down. I don't think I should have to
 write my own class or functions for things like union, intersection, and difference of sets. Still, it was the approach
 that made the most sense to me, so I [implemented my own class](./src/lib/classes.js#L24) for it.
+
+Did I solve for all of the digits in the optimal order and in the optimal way? Probably not, but I won't lose sleep over
+it.
 
 #### Day 9 ([puzzle](https://adventofcode.com/2021/day/9), [solution](./src/solution/day09.js))
 
