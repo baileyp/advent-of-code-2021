@@ -143,3 +143,16 @@ foo.add({});
 ```
 
 This doing what *I* want it to would make me happy.
+
+#### Day 10 ([puzzle](https://adventofcode.com/2021/day/10), [solution](./src/solution/day10.js))
+
+Stacks on stacks on stacks! Yet again where JavaScript's set of native collection types is woefully underpowered for
+many tasks. This puzzle screamed for a double-ended queue but alas, the language does not have it. I considered writing
+my own, but then I remembered I had to go to work today, so I just used an array and therefore ended up with a quadratic
+time implementation due to the use of `Array.prototype.unshift()`.
+
+Still, this puzzle was fun, and I decided to go with exceptions/errors as the mechanism for detecting corrupt or
+incomplete lines. They made for good way to short-circuit a recursive loop *and* provide additional context back to the
+original caller. There was some happy re-use of part 1 in part 2 and some *really* happy reuse of the `median()`
+function I wrote for Day 7. I think there were several ways to match all the bracket types, but I just went with a pair
+of arrays with indexed-matched values.
