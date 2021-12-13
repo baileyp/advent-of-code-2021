@@ -156,3 +156,14 @@ incomplete lines. They made for good way to short-circuit a recursive loop *and*
 original caller. There was some happy re-use of part 1 in part 2 and some *really* happy reuse of the `median()`
 function I wrote for Day 7. I think there were several ways to match all the bracket types, but I just went with a pair
 of arrays with indexed-matched values.
+
+#### Day 11 ([puzzle](https://adventofcode.com/2021/day/11), [solution](./src/solution/day11.js))
+
+There's a [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) quality to this puzzle, having to
+process a generation of change and then applying that change in two separate passes. It took a little finagling to get
+the order of operations just right and, I ended up Doing Something That You Shouldn't™ and by that I mean modifying a
+collection while in the middle of iterating that same collection. Still, in this exact instance there are no side
+effects, so I'm sticking with it.
+
+Sometimes part 2 just comes along and wallops you but today that was not the case, the legwork done for part 1 required
+not changes for part 2, just a different invocation.

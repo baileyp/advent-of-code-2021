@@ -96,5 +96,17 @@ module.exports = {
     yield { column: column + 1, row };
     yield { column, row: row - 1 };
     yield { column, row: row + 1 };
+  },
+
+  /**
+   * Execute any function repeatedly
+   *
+   * @param {function}  callback    The function to call
+   * @param {number}    iterations  The number of times to call the function
+   */
+  repeatFunction: function(callback, iterations) {
+    for (const _ of module.exports.range(1, iterations)) {
+      callback();
+    }
   }
 }
