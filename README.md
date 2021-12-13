@@ -189,3 +189,17 @@ I don't *love* my solution for adjusting to this requirement. It's clunky and th
 make me happy, but I had already spent enough time on this problem and just went with something that works - an
 adjustment I will admit was built by step-debugging, not by reasoning out the solution in my head. Still, it runs quite
 quickly so despite the hack, added with my weakness at graph problems, I'm pleased.
+
+#### Day 13 ([puzzle](https://adventofcode.com/2021/day/13), [solution](./src/solution/day13.js))
+
+I experimented today with a different way of representing a grid in space that really only works for "does this point
+exist" data, which has a nice synergy with this puzzle in the context of overlapping dots. The implementation is a `Map`
+where the keys are the `y` axis, and the values are `Set`s of the `x` axis. Works pretty well and certainly keeps space
+consumption tidy, but it did lend to maybe a slightly awkward algorithm to print out the result in part 2.
+
+I did not find this challenging, 'twas just a bit of math to transpose the coordinates over the fold lines (maybe there
+is some fancy matrix operation for this?), but I'm happy to keep getting re-use out of my little function/class library
+that has been building up. **Side Note:** while, when writing the notes here, I'm generally not ever concerned with the
+algorithms and processing required to parse the input into some sort of programmatic representation, it was nice to make
+use of [named capturing groups](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges#using_named_groups)
+while working with pattern matching - really goes to aid readability IMO.
