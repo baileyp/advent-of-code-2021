@@ -167,3 +167,25 @@ effects, so I'm sticking with it.
 
 Sometimes part 2 just comes along and wallops you but today that was not the case, the legwork done for part 1 required
 not changes for part 2, just a different invocation.
+
+#### Day 12 ([puzzle](https://adventofcode.com/2021/day/12), [solution](./src/solution/day12.js))
+
+😣 🚌 This is me on the struggle bus with today's puzzle.
+As I've [mentioned](https://github.com/baileyp/advent-of-code-2018/blob/e4029a94a75f3825ac965ee44be1cbddacbd35f1/README.md#day-7)
+[before](https://github.com/baileyp/advent-of-code-2020/blob/973d5463d81bc7e0d434c88b1d99fe5c5e1655e7/README.md#day-7-puzzle-solution)
+, I'm not great at graphs problems. Still, I've gotten a bit better over the years but the main source of today's
+struggle was actually a misinterpretation of the requirements. I (very foolishly) assumed that the puzzle input was
+going to model all nodes *and* edges **with** their direction - which was terribly wrong. I wasted a good hour with a
+step debugger all pinned on this bad assumption. I just didn't read carefully and was too quick to get to coding.
+
+At any rate, after I disabused myself of this assumption, the code came together neatly and was a quite simple DFS
+implementation. Well, at least for part 1.
+
+Part 2 stumped me. Yet again I was bit here by a misunderstanding of the new requirement - I thought "single small cave"
+meant the little dead-ends, like cave `c` in the sample data - not that *any* small cave could be visited twice per
+distinct journey.
+
+I don't *love* my solution for adjusting to this requirement. It's clunky and the growth in time complexity does not
+make me happy, but I had already spent enough time on this problem and just went with something that works - an
+adjustment I will admit was built by step-debugging, not by reasoning out the solution in my head. Still, it runs quite
+quickly so despite the hack, added with my weakness at graph problems, I'm pleased.
