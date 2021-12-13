@@ -38,7 +38,8 @@ My goals for the puzzles this year are:
     - Well named variables
     - Self documenting style
 - Develop a decent function library for re-use
-- Little-to-zero Googling
+- Minimal Googling
+- Well-written JSDocs
 
 I realize I will not 100% nail these goals with every single puzzle, but these are what will drive how my solutions come
 together.
@@ -48,7 +49,7 @@ together.
 Within the comments of each file I'll be capturing some very simple notes about the algorithm and space/time complexity.
 In any notes that reference Big O notation, `n` will always refer to the number of lines or items in the puzzle input,
 unless otherwise noted. Time and space complexity notes will ignore overhead from loading the file into memory and any
-input parsing.
+input parsing into a programmatic representation.
 
 ### Puzzles
 
@@ -147,7 +148,7 @@ This doing what *I* want it to would make me happy.
 #### Day 10 ([puzzle](https://adventofcode.com/2021/day/10), [solution](./src/solution/day10.js))
 
 Stacks on stacks on stacks! Yet again where JavaScript's set of native collection types is woefully underpowered for
-many tasks. This puzzle screamed for a double-ended queue but alas, the language does not have it. I considered writing
+many tasks. This puzzle screamed for a double-ended queue† but alas, the language does not have it. I considered writing
 my own, but then I remembered I had to go to work today, so I just used an array and therefore ended up with a quadratic
 time implementation due to the use of `Array.prototype.unshift()`.
 
@@ -157,23 +158,28 @@ original caller. There was some happy re-use of part 1 in part 2 and some *reall
 function I wrote for Day 7. I think there were several ways to match all the bracket types, but I just went with a pair
 of arrays with indexed-matched values.
 
+† It has since come to my realization that a deque is actually *not* needed since this is also solvable iteratively. I
+saw the inherent tree structure of the data and sort of instinctively went with a recursive solution (which would much
+prefer a deque) which is one of those weird pitfalls of software design - perfectly sensible solutions can end up
+looking like anti-patterns. Live and learn 🤷
+
 #### Day 11 ([puzzle](https://adventofcode.com/2021/day/11), [solution](./src/solution/day11.js))
 
 There's a [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) quality to this puzzle, having to
 process a generation of change and then applying that change in two separate passes. It took a little finagling to get
-the order of operations just right and, I ended up Doing Something That You Shouldn't™ and by that I mean modifying a
+the order of operations just right, and I ended up Doing Something That You Shouldn't™ and by that I mean modifying a
 collection while in the middle of iterating that same collection. Still, in this exact instance there are no side
 effects, so I'm sticking with it.
 
-Sometimes part 2 just comes along and wallops you but today that was not the case, the legwork done for part 1 required
-not changes for part 2, just a different invocation.
+Sometimes part 2 just comes along and wallops you but today that was not the case. The legwork done for part 1 required
+no changes for part 2, just a different invocation.
 
 #### Day 12 ([puzzle](https://adventofcode.com/2021/day/12), [solution](./src/solution/day12.js))
 
 😣 🚌 This is me on the struggle bus with today's puzzle.
 As I've [mentioned](https://github.com/baileyp/advent-of-code-2018/blob/e4029a94a75f3825ac965ee44be1cbddacbd35f1/README.md#day-7)
 [before](https://github.com/baileyp/advent-of-code-2020/blob/973d5463d81bc7e0d434c88b1d99fe5c5e1655e7/README.md#day-7-puzzle-solution)
-, I'm not great at graphs problems. Still, I've gotten a bit better over the years but the main source of today's
+, I'm not great at graph problems. Still, I've gotten a bit better over the years but the main source of today's
 struggle was actually a misinterpretation of the requirements. I (very foolishly) assumed that the puzzle input was
 going to model all nodes *and* edges **with** their direction - which was terribly wrong. I wasted a good hour with a
 step debugger all pinned on this bad assumption. I just didn't read carefully and was too quick to get to coding.
@@ -186,9 +192,9 @@ meant the little dead-ends, like cave `c` in the sample data - not that *any* sm
 distinct journey.
 
 I don't *love* my solution for adjusting to this requirement. It's clunky and the growth in time complexity does not
-make me happy, but I had already spent enough time on this problem and just went with something that works - an
+make me happy, but I had already spent enough time on this puzzle and just went with something that works - an
 adjustment I will admit was built by step-debugging, not by reasoning out the solution in my head. Still, it runs quite
-quickly so despite the hack, added with my weakness at graph problems, I'm pleased.
+quickly so despite the hack, added to my weakness at graph problems, I'm pleased.
 
 #### Day 13 ([puzzle](https://adventofcode.com/2021/day/13), [solution](./src/solution/day13.js))
 
