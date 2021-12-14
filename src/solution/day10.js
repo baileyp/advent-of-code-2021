@@ -1,13 +1,17 @@
-const { median } = require("../lib/functions");
+const { median, sum } = require("../lib/functions");
 
-const chunkOpenings = ['(', '[', '{', '<'];
-const chunkClosings = [')', ']', '}', '>'];
+const pairs = new Map([
+  ['(', ')'],
+  ['[', ']'],
+  ['{', '}'],
+  ['<', '>'],
+])
 
 /**
  * Parse the puzzle input into a 2D array of lines/characters
  *
  * @param {string}  input
- * @returns {(string[])[]}
+ * @returns {string[][]}
  */
 function parseInput(input) {
   return input.split("\n")
@@ -15,79 +19,49 @@ function parseInput(input) {
 }
 
 /**
- * Custom error for corrupt lines in the navigation subsystem
- */
-class CorruptLineError extends Error {
-  /**
-   * Constructor
-   * @param {string} illegalCharacter
-   */
-  constructor(illegalCharacter) {
-    super('Corrupt Line Found');
-    this.illegalCharacter = illegalCharacter;
-  }
-}
-
-/**
- * Custom error for incomplete lines in the navigation subsystem
- */
-class IncompleteLineError extends Error {
-  /**
-   * Constructor
-   * @param {array} stack
-   */
-  constructor(stack) {
-    super('Incomplete Line Found');
-    this.stack = stack;
-  }
-}
-
-/**
- * Determine if the given line is corrupted
+ * Find and return the first illegal character in a line
  *
- * @param {string[]}  line  The line to be checked for corruption
- * @param {string[]}  stack A processed stack of closing pairs
+ * @param {string}  line        The line to check
+ * @returns {undefined|string}  The illegal character, or undefined if none found
  */
-function detectCorruptLine(line, stack) {
-  if (line.length === 0) {
-    return;
-  }
-  const character = line.shift();
-  if (chunkClosings.includes(character)) {
-    if (character !== stack.pop()) {
-      throw new CorruptLineError(character);
+function findIllegal(line) {
+  const expectedClosingStack = [];
+
+  for (const char of line) {
+    if (pairs.has(char)) {
+      expectedClosingStack.push(pairs.get(char));
     }
-  } else {
-    stack.push(chunkClosings[chunkOpenings.indexOf(character)]);
+    else if (char !== expectedClosingStack.pop()) {
+      return char;
+    }
   }
-  detectCorruptLine(line, stack)
+
+  return undefined;
 }
 
 /**
- * Determine if the given line is incomplete
+ * Given an incomplete line, return a stack of character that will complete it
  *
- * @param {string[]}  line  The line to be checked for incompletion
- * @param {string[]}  stack A processed stack of closing pairs
+ * @param {string}  line  A possibly incomplete line
+ * @returns {string[]}    The character needed to complete the line
  */
-function detectIncompleteLine(line, stack) {
-  if (line.length === 0) {
-    if (stack.length !== 0) {
-      throw new IncompleteLineError(stack);
+function autoComplete(line) {
+  const expectedClosingStack = [];
+
+  for (const char of line) {
+    if (pairs.has(char)) {
+      expectedClosingStack.push(pairs.get(char));
+    } else {
+      expectedClosingStack.pop();
     }
-    return;
   }
-  const character = line.shift();
-  if (chunkClosings.includes(character)) {
-    stack.pop();
-  } else {
-    stack.push(chunkClosings[chunkOpenings.indexOf(character)]);
-  }
-  detectIncompleteLine(line, stack)
+
+  return expectedClosingStack.reverse();
 }
 
 module.exports = {
   /**
-   * O(l * c^2) time and O(l * c) space where l is the number of lines and c is the number of characters per line
+   * O(l * c) time and space where l is the number of lines and c is the number of characters per line
    *
    * @param {string}  input Raw puzzle input where each line is a series of chunks from the navigation subsystem
    * @returns {number}      The score for this syntax checker
@@ -97,22 +71,14 @@ module.exports = {
       ")": 3,
       "]": 57,
       "}": 1197,
-      ">": 25137
+      ">": 25137,
+      [undefined]: 0
     };
-    let score = 0;
-    parseInput(input).forEach(line => {
-      try {
-        detectCorruptLine(line, []);
-      }
-      catch (e) {
-        score += scoreTable[e.illegalCharacter];
-      }
-    });
-    return score;
+    return parseInput(input).map(line => scoreTable[findIllegal(line)]).reduce(sum);
   },
 
   /**
-   * O(l * c^2 + i log i) time and O(l * c + i) space where l is the number of lines, c is the number of characters per
+   * O(l * c + i log i) time and space where l is the number of lines, c is the number of characters per
    * line, and i is the number of incomplete lines found.
    *
    * @param {string}  input Raw puzzle input where each line is a series of chunks from the navigation subsystem
@@ -125,29 +91,12 @@ module.exports = {
       "}": 3,
       ">": 4
     };
-    const scores = [];
-    parseInput(input)
-      .filter(line => {
-        try {
-          detectCorruptLine(Array.from(line), []);
-        }
-        catch (e) {
-          return false;
-        }
-        return true;
-      })
-      .forEach(line => {
-        try {
-          detectIncompleteLine(line, []);
-        }
-        catch (e) {
-          let lineScore = 0;
-          while (e.stack.length) {
-            lineScore *= 5;
-            lineScore += scoreTable[e.stack.pop()];
-          }
-          scores.push(lineScore);
-        }
+    const scores = parseInput(input)
+      .filter(line => findIllegal(line) === undefined)
+      .map(line => {
+        return autoComplete(line)
+          .map(char => scoreTable[char])
+          .reduce((score, charScore) => score * 5 + charScore, 0);
       });
     return median(scores);
   }
