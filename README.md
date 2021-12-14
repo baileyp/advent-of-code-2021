@@ -209,3 +209,57 @@ that has been building up. **Side Note:** while, when writing the notes here, I'
 algorithms and processing required to parse the input into some sort of programmatic representation, it was nice to make
 use of [named capturing groups](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges#using_named_groups)
 while working with pattern matching - really goes to aid readability IMO.
+
+#### Day 14 ([puzzle](https://adventofcode.com/2021/day/14), [solution](./src/solution/day14.js))
+
+Today was bound to happen. I was stumped. I solved part 1 just fine - which I left untouched in my committed code. But
+that solution just crashed and burned running part 2. When looking at the time/space complexity, it's easy to see why.
+
+Consider what ` O((n - 1) * (2^s) + 1)` really means given the actual inputs at play here. Re-written as a mathematical
+function, the complexity can be represented as 
+
+⁄€‹›ﬁ°·‚—
+
+> *f(n, s) = (n - 1) x 2ˢ + 1*
+
+Given the actual inputs for part 1, this represents as:
+
+> *f(20, 10) = 19,457*
+
+Just under 20k - not a problem.
+
+And with the actual inputs for part 2:
+
+> *f(20, 40) = 20,890,720,927,745*
+
+Nearly *21 billion*!!!
+
+It was obvious to me at this point that modeling the whole solution space was not possible, I just couldn't work out
+what I had to model instead. Therefore, today was the first time I hit up 
+[Reddit](https://www.reddit.com/r/adventofcode/comments/rfzq6f/2021_day_14_solutions/) for hints. I didn't want to find
+solutions, I just wanted a nugget of something to get my brain working in a different context. While scrolling I saw the
+word "lanternfish" and immediately remembered that was part of [another day's puzzle](#day-6-puzzle-solution). I looked
+up my own solution and found that I was modeling counts per age for that one...
+
+Counts per age...
+
+Counts per age...
+
+*COUNTS PER ELEMENT!!!*
+
+Wait, but I still need to figure out how to track insertions. Looking back at the sample data and trying to reason more
+about what was happening at each step, I finally figured it out. Every pair always generates a new letter (i.e., an
+increment to that letter's count) so then it was a matter of keeping track of which pairs existed. Once I settled on
+modeling the counts of each letter *and* of each pair, the solution came together pretty quickly. Due to all of this, I
+did heavily document the code this time around, as a reminder to myself and as a way to hopefully make this type of
+algorithmic trick stick in my brain.
+
+Looking at the new time complexity, it's also no wonder that this runs super quickly
+
+> O((n^2 - n) * s)
+> 
+> *f(n, s) = (n² - n) x s*
+> 
+> *f(20, 40) = 15,200*
+
+That's less time than the algorithm + inputs for part 1!
