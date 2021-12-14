@@ -215,7 +215,7 @@ while working with pattern matching - really goes to aid readability IMO.
 Today was bound to happen. I was stumped. I solved part 1 just fine - which I left untouched in my committed code. But
 that solution just crashed and burned running part 2. When looking at the time/space complexity, it's easy to see why.
 
-Consider what ` O((n - 1) * (2^s) + 1)` really means given the actual inputs at play here. Re-written as a mathematical
+Consider what `O((n - 1) * (2^s) + 1)`† really means given the actual inputs at play here. Re-written as a mathematical
 function, the complexity can be represented as
 
 > *f(n, s) = (n - 1) x 2ˢ + 1*
@@ -261,3 +261,7 @@ Looking at the new time complexity, it's also no wonder that this runs super qui
 > *f(20, 40) = 15,200*
 
 That's less time than the algorithm + inputs for part 1!
+
+† I realize that in proper Big-O notation you don't write constants like `+ 1` and so forth, but since I bothered to
+work out what the real mathematical complexity was, I wanted to capture it. The correct notation here, I believe, is
+`O(n * 2^s)`.
