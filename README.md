@@ -230,7 +230,7 @@ And with the actual inputs for part 2:
 
 > *f(20, 40) = 20,890,720,927,745*
 
-Nearly *21 billion*!!!
+Nearly *21 trillion*!!!
 
 It was obvious to me at this point that modeling the whole solution space was not possible, I just couldn't work out
 what I had to model instead. Therefore, today was the first time I hit up 
