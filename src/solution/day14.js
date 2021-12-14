@@ -121,7 +121,7 @@ module.exports = {
       //    NC => 2      C => 3
       //    CB => 1      B => 1
       //    CN => 1
-      // Apply this process iteratively to solve the polymer evolution without mapping the entire solution of n^40!
+      // Apply this process iteratively to solve the polymer evolution without mapping the entire solution of 2^40!
       Array.from(pairCounts.entries()).forEach(([pair, count]) => {
         const insertedElement = insertionRules.get(pair);
         const leftPair = pair[0] + insertedElement;
