@@ -216,9 +216,7 @@ Today was bound to happen. I was stumped. I solved part 1 just fine - which I le
 that solution just crashed and burned running part 2. When looking at the time/space complexity, it's easy to see why.
 
 Consider what ` O((n - 1) * (2^s) + 1)` really means given the actual inputs at play here. Re-written as a mathematical
-function, the complexity can be represented as 
-
-⁄€‹›ﬁ°·‚—
+function, the complexity can be represented as
 
 > *f(n, s) = (n - 1) x 2ˢ + 1*
 
