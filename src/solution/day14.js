@@ -115,11 +115,12 @@ module.exports = {
       //    NN => 1      N => 3
       //    NC => 1      C => 2
       //    CB => 1      B => 1
-      // When applying the insertion rule NN -> C the following changes happen to our map: NN - 1, NC + 1, CN + 1
+      // When applying the insertion rule NN -> C the following changes happen to our map: NN -= 1, NC += 1, CN += 1
       // so the next iteration of the map looks like this
-      //    NC => 2      N => 2
-      //    CB => 1      C => 3
-      //    CN => 1      B => 1
+      //    NN => 0      N => 2
+      //    NC => 2      C => 3
+      //    CB => 1      B => 1
+      //    CN => 1
       // Apply this process iteratively to solve the polymer evolution without mapping the entire solution of n^40!
       Array.from(pairCounts.entries()).forEach(([pair, count]) => {
         const insertedElement = insertionRules.get(pair);
