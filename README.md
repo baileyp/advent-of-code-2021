@@ -265,3 +265,28 @@ That's less time than the algorithm + inputs for part 1!
 † I realize that in proper Big-O notation you don't write constants like `+ 1` and so forth, but since I bothered to
 work out what the real mathematical complexity was, I wanted to capture it. The correct notation here, I believe, is
 `O(n * 2^s)`.
+
+#### Day 15 ([puzzle](https://adventofcode.com/2021/day/15), [solution](./src/solution/day15.js))
+
+Well, just like yesterday, today was bound to happen as well. I don't know pathfinding algorithms *at all* but I did
+know that BFS was probably a good start. I tried a BFS solution for a while and just kept getting stuck. After hitting
+[the Reddit thread](https://www.reddit.com/r/adventofcode/comments/rgqzt5/2021_day_15_solutions/) and reading around a
+bit, I learned a few things.
+
+1. There were lots of people using very specific pathfinding algorithms like Djikstra and A\*.
+2. This also seems to be a Dynamic Programming problem which is something I understand when reading academically, but
+   never see it as an implementation pattern.
+3. While I feel very comfortable with DFS, I rarely (read: never) have a case to use/practice BFS so even my first stab
+   at implementing it wasn't great.
+
+I didn't want to stray far from my initial thought (BFS) so I found some reference solutions and adapted one to what I
+had already started writing. I'll spare you the details of the iterations I went through but the big thing I was missing
+was sorting of the queue, plus the occasional x/y row/column mixup. I ran it with the test input and got `40` so then I
+tried with my actual puzzle input, and it yielded the correct answer. Great! Except that I didn't totally understand how
+it worked, so I stepped through the algorithm in my head (and a bit on paper) and started to get a sense of it and
+documented what I could in my code. I think I now understand BFS about 1000% more than I did this morning†.
+
+Part 2 might have a trick, but I just wrote a tiler for the original cave grid, which was not complicated, and re-ran it
+through the pathfinder and *Robert's Your Mother's Brother*.
+
+† Editor's Note: All of which I will probably forget by next year's AoC.
