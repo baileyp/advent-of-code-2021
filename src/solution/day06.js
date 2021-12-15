@@ -1,6 +1,9 @@
 const { range, sum } = require('../lib/functions');
 const { DefaultMap } = require('../lib/classes');
 
+const NEW_FISH_AGE = 8;
+const SPAWN_FISH_AGE = 6;
+
 module.exports = {
   /**
    * O(n) time and O(1) space with respect to the puzzle input, where n is the initial quantity of fish.
@@ -11,7 +14,7 @@ module.exports = {
    * @returns {number}      Total number of fish after n days
    */
   part1: function(input, numDays = 80) {
-    const fish = input.split(',').map(number => parseInt(number, 10));
+    const fish = input.split(',').map(number => parseInt(number));
 
     const fishPerAge = new DefaultMap(() => 0);
     fish.forEach(age => {
@@ -20,11 +23,11 @@ module.exports = {
 
     for (const day of range(1, numDays)) {
       const spawningFish = fishPerAge.get(0);
-      for (const age of range(1, 8)) {
+      for (const age of range(1, NEW_FISH_AGE)) {
         fishPerAge.set(age - 1, fishPerAge.get(age));
       }
-      fishPerAge.set(6, fishPerAge.get(6) + spawningFish);
-      fishPerAge.set(8, spawningFish);
+      fishPerAge.set(SPAWN_FISH_AGE, fishPerAge.get(SPAWN_FISH_AGE) + spawningFish);
+      fishPerAge.set(NEW_FISH_AGE, spawningFish);
     }
 
     return Array.from(fishPerAge.values()).reduce(sum);

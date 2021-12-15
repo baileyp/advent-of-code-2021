@@ -1,5 +1,8 @@
 const { repeatFunction, neighbors } = require("../lib/functions");
 
+const MAX_ENERGY_LEVEL = 9;
+const FLASH_RESET_LEVEL = 0;
+
 /**
  * Parse the puzzle into into a 2D array of numbers.
  *
@@ -13,6 +16,8 @@ function parseInput(input) {
 
 /**
  * Step the grid through a single energy-increase lifecycle.
+ *
+ * Mutates the values in the grid.
  *
  * @param {number[][]}  grid  A grid of octopuses positions and their energy levels
  */
@@ -47,7 +52,7 @@ function octopusFromCoordinate(coordinate) {
 }
 
 /**
- * Find all flashing octopuses in the grid, propogate their flash to neighboring octopuses, and return the number of
+ * Find all flashing octopuses in the grid, propagate their flash to neighboring octopuses, and return the number of
  * octopuses that flashed this cycle.
  *
  * @param {number[][]}  grid  A grid of octopuses positions and their energy levels
@@ -58,7 +63,7 @@ function processAndCountFlashes(grid) {
 
   for (let row = 0; row < grid.length; row++) {
     for (let column = 0; column < grid[row].length; column++) {
-      if (grid[row][column] > 9) {
+      if (grid[row][column] > MAX_ENERGY_LEVEL) {
         toFlash.add(octopusToCoordinate({ row, column }));
       }
     }
@@ -70,7 +75,7 @@ function processAndCountFlashes(grid) {
       .filter(({ row, column }) => row in grid && column in grid[row])
       .forEach(({ row, column }) => {
         grid[row][column] += 1;
-        if (grid[row][column] > 9) {
+        if (grid[row][column] > MAX_ENERGY_LEVEL) {
           toFlash.add(octopusToCoordinate({ row, column }));
         }
       });
@@ -78,7 +83,7 @@ function processAndCountFlashes(grid) {
 
   toFlash.forEach(coordinate => {
     const { row, column } = octopusFromCoordinate(coordinate);
-    grid[row][column] = 0;
+    grid[row][column] = FLASH_RESET_LEVEL;
   });
 
   return toFlash.size;

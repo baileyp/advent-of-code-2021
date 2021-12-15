@@ -98,13 +98,13 @@ module.exports = {
     const pairCounts = new DefaultMap(() => 0);
     const elementCounts = new DefaultMap(() => 0);
 
-    // Seed the pair counts with the template
+    // Seed the pair counts from the template
     for (let cursor = 0, end = polymerTemplate.length - 1; cursor < end; cursor++) {
       const pair = polymerTemplate.substring(cursor, cursor + 2);
       pairCounts.set(pair, pairCounts.get(pair) + 1);
     }
 
-    // Seed the element counts with the template
+    // Seed the element counts from the template
     for (const element of polymerTemplate) {
       elementCounts.set(element, elementCounts.get(element) + 1);
     }

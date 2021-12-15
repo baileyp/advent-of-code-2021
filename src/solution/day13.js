@@ -42,7 +42,15 @@ function blankPage() {
  */
 function foldPage(page, fold) {
   const { axis, line } = fold;
-  return ('x' === axis ? xFold : yFold)(page, line);
+  const foldStrategy = 'x' === axis
+    ? ([y, xes]) => [y, Array.from(xes.values()).map(x => foldCoordinate(x, line))]
+    : ([y, xes]) => [foldCoordinate(y, line), xes];
+
+  const folded = blankPage();
+  Array.from(page.entries())
+    .map(foldStrategy)
+    .forEach(([y, xes]) => xes.forEach(x => folded.get(y).add(x)));
+  return folded;
 }
 
 /**
@@ -54,36 +62,6 @@ function foldPage(page, fold) {
  */
 function foldCoordinate(value, line) {
   return value < line ? value : value - 2 * (value - line);
-}
-
-/**
- * Execute a y-axis fold on a page at a line
- *
- * @param {DefaultMap<number, Set>} page  The page to fold
- * @param {number}                  line  The y-axis to fold over
- * @returns {DefaultMap<number, Set>}     The folded page
- */
-function yFold(page, line) {
-  const folded = blankPage();
-  Array.from(page.entries())
-    .map(([y, xes]) => [foldCoordinate(y, line), xes])
-    .forEach(([y, xes]) => xes.forEach(x => folded.get(y).add(x)));
-  return folded;
-}
-
-/**
- * Execute an x-axis fold on a page at a line
- *
- * @param {DefaultMap<number, Set>} page  The page to fold
- * @param {number}                  line  The x-axis to fold over
- * @returns {DefaultMap<number, Set>}     The folded page
- */
-function xFold(page, line) {
-  const folded = blankPage();
-  Array.from(page.entries())
-    .map(([y, xes]) => [y, Array.from(xes.values()).map(x => foldCoordinate(x, line))])
-    .forEach(([y, xes]) => xes.forEach(x => folded.get(y).add(x)));
-  return folded;
 }
 
 module.exports = {

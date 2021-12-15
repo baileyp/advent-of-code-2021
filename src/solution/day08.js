@@ -74,7 +74,7 @@ module.exports = {
     const entries = parseInput(input);
     let displayCount = 0;
     entries.forEach(entry => {
-      displayCount += entry.output.filter(value => [2, 4, 3, 7].includes(value.length)).length;
+      displayCount += entry.output.filter(value => [2, 4, 3, 7].includes(value.size)).length;
     });
 
     return displayCount;
@@ -97,7 +97,7 @@ module.exports = {
             return digits.findIndex(digit => digit.isEqualTo(outputDigit)).toString();
           })
           .join('');
-        return parseInt(outputValue, 10);
+        return parseInt(outputValue);
       })
       .reduce(sum);
   }

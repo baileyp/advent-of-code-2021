@@ -1,6 +1,6 @@
 const { sum } = require('../lib/functions');
 
-const PLAYED  = -1;
+const PLAYED = -1;
 
 /**
  * Parse the input into an array of numbers in call order and an array of boards. 
@@ -12,11 +12,11 @@ const PLAYED  = -1;
  */
 function parseInput(input) {
   const chunks = input.split("\n\n");
-  const numberOrder = chunks.shift().split(',').map(number => parseInt(number, 10));
+  const numberOrder = chunks.shift().split(',').map(number => parseInt(number));
 
   const boards = chunks.map(chunk => {
     return chunk.split("\n").map(line => {
-      return line.trim(' ').split(/ +/).map(number => parseInt(number, 10));
+      return line.trim().split(/ +/).map(number => parseInt(number));
     });
   });
 

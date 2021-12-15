@@ -10,7 +10,7 @@ module.exports = {
    * @returns {number}      The total fuel consumption after all crab submarines align
    */
   part1: function(input) {
-    const crabPositions = input.split(',').map(number => parseInt(number, 10));
+    const crabPositions = input.split(',').map(number => parseInt(number));
     const idealPosition = median(crabPositions);
 
     return crabPositions.map(crabPosition => Math.abs(crabPosition - idealPosition)).reduce(sum);
@@ -23,7 +23,7 @@ module.exports = {
    * @returns {number}      The total fuel consumption after all crab submarines align
    */
   part2: function(input) {
-    const crabPositions = input.split(',').map(number => parseInt(number, 10));
+    const crabPositions = input.split(',').map(number => parseInt(number));
     const idealPositionGuess1 = Math.floor(mean(crabPositions));
     const idealPositionGuess2 = Math.ceil(mean(crabPositions));
 

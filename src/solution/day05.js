@@ -11,7 +11,7 @@ function parseInput(input) {
     .map(line => {
       return line.split(" -> ")
         .map(coordinate => {
-          const [x, y] = coordinate.split(',').map(number => parseInt(number, 10))
+          const [x, y] = coordinate.split(',').map(number => parseInt(number))
           return { x, y };
         });
     });
@@ -45,8 +45,9 @@ function fillLines(lines, excludeDiagonals = true) {
   lines.forEach(([lineStart, lineEnd]) => {
     const xStep = determineStep(lineStart.x, lineEnd.x);
     const yStep = determineStep(lineStart.y, lineEnd.y);
+    const isDiagonal = xStep !== 0 && yStep !== 0;
 
-    if (excludeDiagonals && xStep !== 0 && yStep !== 0) {
+    if (excludeDiagonals && isDiagonal) {
       return undefined;
     }
 
@@ -74,8 +75,8 @@ function plotPoints(plottedLines) {
   const plottedPoints = new DefaultMap(() => 0);
 
   plottedLines.forEach(plottedLine => {
-    plottedLine.forEach(point => {
-      const key = `${point.x},${point.y}`;
+    plottedLine.forEach(({ x, y }) => {
+      const key = `${x},${y}`;
       plottedPoints.set(key, plottedPoints.get(key) + 1);
     });
   });
@@ -89,7 +90,7 @@ module.exports = {
    *
    * @param {string} input    Raw input where each line is a start/end coordinate pair expressed as "x1,y1 -> x2,y2"
    * @param excludeDiagonals  Exclude diagonal lines from counting
-   * @returns {number}
+   * @returns {number}        Number of coordinate points where two or more vent lines overlap, excluding diagnoals
    */
   part1: function(input, excludeDiagonals = true) {
     const lines = parseInput(input);
@@ -105,7 +106,7 @@ module.exports = {
    * O(n) time and space, where n is the total number of points defined by the vent lines
    *
    * @param {string} input    Raw input where each line is a start/end coordinate pair expressed as "x1,y1 -> x2,y2"
-   * @returns {number}
+   * @returns {number}        Number of coordinate points where two or more vent lines overlap
    */
   part2: function(input) {
     return module.exports.part1(input, false);
