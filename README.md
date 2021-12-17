@@ -308,7 +308,7 @@ that it was smooth sailing, even through part 2 which was a cinch to implement w
 #### Day 17 ([puzzle](https://adventofcode.com/2021/day/17), [solution](./src/solution/day17.js))
 
 I had a real fun *A-HA!* moment with part 1. Since the goal was to find the highest arcing shot, the best `y` was
-obviously going to be a positive number. Also, there are two interesting facts that we can derive from the linear
+obviously going to be a positive number. Also, there are a few interesting facts that we can derive from the linear
 acceleration/deceleration of a shot:
 
 1. Every upwards shot is guaranteed to come back down at exactly `y=0` before continuing negative
