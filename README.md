@@ -290,3 +290,17 @@ Part 2 might have a trick, but I just wrote a tiler for the original cave grid, 
 through the pathfinder and *Robert's Your Mother's Brother*.
 
 † Editor's Note: All of which I will probably forget by next year's AoC.
+
+#### Day 16 ([puzzle](https://adventofcode.com/2021/day/16), [solution](./src/solution/day16.js))
+
+I immediately got a [2018 Day 8](https://github.com/baileyp/advent-of-code-2018#day-8) vibe (yes, I remembered that -
+it's how my brain works, ok?) from this puzzle. Based on that, plus my comfortability with OOP, I set out to write some
+classes to represent packets - yes, even knowing that
+[Papa Crockford doesn't like classes](https://www.youtube.com/watch?v=XFTOG895C7c) - and they came together pretty
+easily. And while I definitely had to spend some time making sure I didn't get into Magic Int Hell™, I had something in
+place that *should* work. And it did! 
+
+Except it didn't. It worked only for the test input, and failed miserably on the real input. After pulling out a few
+hairs and some step debugging, I found that I wasn't properly calculating the packet length for operator packets of
+length type '1' which - perhaps nefariously - didn't present as a problem with the test input. At any rate, once I fixed
+that it was smooth sailing, even through part 2 which was a cinch to implement with the model I already had in place.
