@@ -304,3 +304,22 @@ Except it didn't. It worked only for the test input, and failed miserably on the
 hairs and some step debugging, I found that I wasn't properly calculating the packet length for operator packets of
 length type '1' which - perhaps nefariously - didn't present as a problem with the test input. At any rate, once I fixed
 that it was smooth sailing, even through part 2 which was a cinch to implement with the model I already had in place.
+
+#### Day 16 ([puzzle](https://adventofcode.com/2021/day/16), [solution](./src/solution/day16.js))
+
+I had a real fun *A-HA!* moment with part 1. Since the goal was to find the highest arcing shot, the best `y` was
+obviously going to be a positive number. Also, there are two interesting facts that we can derive from the linear
+acceleration/deceleration of a shot:
+
+1. Every upwards shot is guaranteed to come back down at exactly `y=0` before continuing negative
+2. Therefore, the height reached by initial velocity `y` is the nth triangle number of `y`
+   (thank you [Day 7!](#day-7-puzzle-solution))
+3. This also means the highest shot will also be the fastest moving shot by the time it reaches `y=0`, meaning it would
+   go from `y=0` to `y=minY` in a single step.
+
+Given all of the above, the solution is just a simple math problem that only needs a single value from the target area -
+very cool!
+
+Part 2 might have a math trick as well, but hey, I'm programmer not a mathematician. Still, using some related knowledge
+I was able to narrow down the solution space to something reasonable, and then I just simulated every shot within those
+boundaries, which was not complicated.

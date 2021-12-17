@@ -67,6 +67,16 @@ module.exports = {
   },
 
   /**
+   * Inverse of finding the nth triangle number. Given n, determine the triangle's size
+   *
+   * @param {number}  num
+   * @returns {number}
+   */
+  inverseTriangleNumber: function(num) {
+    return Math.floor(Math.sqrt(num * 2));
+  },
+
+  /**
    * Find the cartesian neighbors of a given coordinate point
    *
    * @param {number}  column  Or 'x' in traditional grid systems
