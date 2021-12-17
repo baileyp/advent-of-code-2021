@@ -312,14 +312,14 @@ obviously going to be a positive number. Also, there are a few interesting facts
 acceleration/deceleration of a shot:
 
 1. Every upwards shot is guaranteed to come back down at exactly `y=0` before continuing negative
-2. Therefore, `y` is the nth triangle number of the height reached by initial velocity `y`
+2. Therefore, the height reached by initial velocity `y` is just the `y`th triangle number
    (thank you [Day 7!](#day-7-puzzle-solution))
 3. This also means the highest shot will also be the fastest moving shot by the time it reaches `y=0`, meaning it would
-   go from `y=0` to `y=minY` in a single step.
+   go from `y=0` to `y=minY` in a single step, making `minY` (as an absolute value) the `y + 1`th triangle number.
 
 Given all of the above, the solution is just a simple math problem that only needs a single value from the target area -
 very cool!
 
-Part 2 might have a math trick as well, but hey, I'm programmer not a mathematician. Still, using some related knowledge
-I was able to narrow down the solution space to something reasonable, and then I just simulated every shot within those
-boundaries, which was not complicated.
+Part 2 might have a math trick as well - parabolas or some other - but hey, I'm programmer not a mathematician. Still,
+using some related knowledge I was able to narrow down the solution space to something reasonable, and then I just
+simulated every shot within those boundaries, which was not complicated.
