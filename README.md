@@ -305,7 +305,7 @@ hairs and some step debugging, I found that I wasn't properly calculating the pa
 length type '1' which - perhaps nefariously - didn't present as a problem with the test input. At any rate, once I fixed
 that it was smooth sailing, even through part 2 which was a cinch to implement with the model I already had in place.
 
-#### Day 16 ([puzzle](https://adventofcode.com/2021/day/16), [solution](./src/solution/day16.js))
+#### Day 17 ([puzzle](https://adventofcode.com/2021/day/17), [solution](./src/solution/day17.js))
 
 I had a real fun *A-HA!* moment with part 1. Since the goal was to find the highest arcing shot, the best `y` was
 obviously going to be a positive number. Also, there are two interesting facts that we can derive from the linear
