@@ -312,7 +312,7 @@ obviously going to be a positive number. Also, there are a few interesting facts
 acceleration/deceleration of a shot:
 
 1. Every upwards shot is guaranteed to come back down at exactly `y=0` before continuing negative
-2. Therefore, the height reached by initial velocity `y` is the nth triangle number of `y`
+2. Therefore, `y` is the nth triangle number of the height reached by initial velocity `y`
    (thank you [Day 7!](#day-7-puzzle-solution))
 3. This also means the highest shot will also be the fastest moving shot by the time it reaches `y=0`, meaning it would
    go from `y=0` to `y=minY` in a single step.
