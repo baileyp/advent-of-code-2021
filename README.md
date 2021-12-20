@@ -323,3 +323,58 @@ very cool!
 Part 2 might have a math trick as well - parabolas or some other - but hey, I'm programmer not a mathematician. Still,
 using some related knowledge I was able to narrow down the solution space to something reasonable, and then I just
 simulated every shot within those boundaries, which was not complicated.
+
+#### Day 18 ([puzzle](https://adventofcode.com/2021/day/18), [solution](./src/solution/day178.js))
+
+*Ouch.* This puzzle kicked my butt. I spent hours across several days trying to get a recursive/graph solution working
+and I just couldn't find the right algorithm that would manage exploding numbers correctly. I could get it to work for
+some scenarios, but not all. Let me try to explain.
+
+Consider this snailfish sum from the sample data:
+
+```
+  [[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]]
++ [7,[[[3,7],[4,3]],[[6,3],[8,8]]]]
+= [[[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]],[7,[[[3,7],[4,3]],[[6,3],[8,8]]]]] (before reduction)
+```
+
+As a graph, it looks like this (depth along the y axis):
+
+```
+0 |                  _________ + _________
+  |                 /                     \
+1 |          _____ L ______           ____ R ___
+  |         /              \         /          \
+2 |      _ L _            _ R _     7       ____ R ____
+  |     /     \          /     \           /           \   
+3 |    L       R        L       R         L             R     
+  |   / \     / \     /   \    / \      /   \         /   \   
+4 |  0   R   0   0   L     R  9   5    L     R       L     R  
+  |     / \         / \   / \         / \   / \     / \   / \ 
+5 |    4   5       4   5 2   6       3   7 4   3   6   3 8   8
+```
+
+After the first explosion, it becomes this
+
+```
+0 |                  _________ + _________
+  |                 /                     \
+1 |          _____ L ______           ____ R ___
+  |         /              \         /          \
+2 |      _ L _            _ R _     7       ____ R ____
+  |     /     \          /     \           /           \   
+3 |    L       R        L       R         L             R     
+  |   / \     / \     /   \    / \      /   \         /   \   
+4 |  4   0   5   0   L     R  9   5    L     R       L     R  
+  |                 / \   / \         / \   / \     / \   / \ 
+5 |                4   5 2   6       3   7 4   3   6   3 8   8
+```
+
+Which my recursive/graph approach managed, but now enters the problem. The next node to explode `L,R,L,L` value of `4,5`
+which splits to left of `4` and right of `5`. Now, the `4` needs to be added to a leftwards tree at `L,L,R,R,R` value of
+`0`, that, in a recursive approach *had already completed processing*. There was no "walk that part of the graph" again
+code path available. I think I could have done it in a second pass - a sort of post-processing - but the state
+management just seemed like a nightmare.
+
+So, I gave up and just wrangled the explodes, splits, and most other operations on the string representations directly.
+The code is ugly, but it's fairly fast and, once I got it working, implementing part 2 was trivial.
