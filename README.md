@@ -371,7 +371,7 @@ After the first explosion, it becomes this
 ```
 
 Which my recursive/graph approach managed, but now enters the problem. The next node to explode `L,R,L,L` value of `4,5`
-which splits to left of `4` and right of `5`. Now, the `4` needs to be added to a leftwards tree at `L,L,R,R,R` value of
+which splits to left of `4` and right of `5`. Now, the `4` needs to be added to a leftwards tree at `L,L,R,R` value of
 `0`, that, in a recursive approach *had already completed processing*. There was no "walk that part of the graph" again
 code path available. I think I could have done it in a second pass - a sort of post-processing - but the state
 management just seemed like a nightmare.
