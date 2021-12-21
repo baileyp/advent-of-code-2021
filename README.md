@@ -417,4 +417,4 @@ It was kind of fun to implement JavaScript's iterator protocol on a class, and I
 library function to yield results in a specific order (previously callers didn't care) as well as a tweak to include
 the origin coordinate in the yielded values.
 
-Given how difficult day 18 was for me at (at this time) I've completely skipped day 19, this was satisfying.
+Given how difficult day 18 was for me and that - at this time - I've completely skipped day 19, this was satisfying.
