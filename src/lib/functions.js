@@ -79,14 +79,16 @@ module.exports = {
   /**
    * Find the cartesian neighbors of a given coordinate point
    *
-   * @param {number}  column  Or 'x' in traditional grid systems
-   * @param {number}  row     Or 'y' in traditional grid systems
-   * @returns {Generator<{column: number, row: number}, void, *>}
+   * @param {number}  column        Or 'x' in traditional grid systems
+   * @param {number}  row           Or 'y' in traditional grid systems
+   * @param {boolean} includeOrigin Whether or not the yielded values should include the input coordinate
+   *
+   * @returns {Generator<{column: number, row: number}, void>}
    */
-  neighbors: function*(column, row) {
-    for (let colOffset = column - 1; colOffset <= column + 1; colOffset++) {
-      for (let rowOffset = row - 1; rowOffset <= row + 1; rowOffset++) {
-        if (colOffset === column && rowOffset === row) {
+  neighbors: function*(column, row, includeOrigin = false) {
+    for (let rowOffset = row - 1; rowOffset <= row + 1; rowOffset++) {
+      for (let colOffset = column - 1; colOffset <= column + 1; colOffset++) {
+        if (!includeOrigin && colOffset === column && rowOffset === row) {
           continue;
         }
         yield { column: colOffset, row: rowOffset };

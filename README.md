@@ -378,3 +378,43 @@ management just seemed like a nightmare.
 
 So, I gave up and just wrangled the explodes, splits, and most other operations on the string representations directly.
 The code is ugly, but it's fairly fast and, once I got it working, implementing part 2 was trivial.
+
+#### Day 19 ([puzzle](https://adventofcode.com/2021/day/19), [solution](./src/solution/day19.js))
+
+Nope. Not yet.
+
+#### Day 20 ([puzzle](https://adventofcode.com/2021/day/20), [solution](./src/solution/day20.js))
+
+[*Zoom and enhance!*](https://knowyourmeme.com/memes/zoom-and-enhance)
+
+This one was kinda fun. I understood it to be another [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+style puzzle from the get-go, but I also knew something was lurking by the mention of the infinite field. Took me a
+while to realize a few things about this:
+
+1. That the infinite field is not just inert space for the image to grow into (my original understanding) but that it
+   also has to be processed by the algorithm.
+2. The enhancement behavior of the field was predictable based on the algorithm indexes of `.........` (decimal `0`) and
+   `#########` (decimal `511`), respectively. Basically, given the right conditions, the entire field will toggle from
+   dark to lit or vice-versa.
+3. The sample data does not trigger a change to the field as described above, but the actual puzzle input does.
+
+Once I came to understand these things, the rest was just implementation. I went for a custom object to implement the
+image and did everything I could think of to optimize time and space:
+
+- Using a `Set` to store just the locations of the lit pixels to both keep the space tidy and allow puzzle answers to be
+  calculated in constant time.
+- Keeping track of the image boundary at "pixel insertion" time so as to avoid calculating it later.
+- Generator for iteration.
+- The state of the infinite field is represented by a single value.
+
+I also implemented the algorithm as a `Map` for O(1) lookups because I was unsure about the time-complexity of bracket
+notation for accessing string indexes, and the time complexity of `String.prototype.charAt()`
+[seems to be unclear](https://stackoverflow.com/questions/60007042/does-javscripts-string-charat-method-have-o1-time-complexity).
+
+Even with all that, part 2 still took about 5 seconds on my 2017 i5 MBP so about 100ms per enhancement.
+
+It was kind of fun to implement JavaScript's iterator protocol on a class, and I also had to tweak my `neighbors`
+library function to yield results in a specific order (previously callers didn't care) as well as a tweak to include
+the origin coordinate in the yielded values.
+
+Given how difficult day 18 was for me at (at this time) I've completely skipped day 19, this was satisfying.
