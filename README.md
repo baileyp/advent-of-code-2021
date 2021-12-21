@@ -324,7 +324,7 @@ Part 2 might have a math trick as well - parabolas or some other - but hey, I'm 
 using some related knowledge I was able to narrow down the solution space to something reasonable, and then I just
 simulated every shot within those boundaries, which was not complicated.
 
-#### Day 18 ([puzzle](https://adventofcode.com/2021/day/18), [solution](./src/solution/day178.js))
+#### Day 18 ([puzzle](https://adventofcode.com/2021/day/18), [solution](./src/solution/day18.js))
 
 *Ouch.* This puzzle kicked my butt. I spent hours across several days trying to get a recursive/graph solution working
 and I just couldn't find the right algorithm that would manage exploding numbers correctly. I could get it to work for
