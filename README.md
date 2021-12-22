@@ -418,3 +418,43 @@ library function to yield results in a specific order (previously callers didn't
 the origin coordinate in the yielded values.
 
 Given how difficult day 18 was for me and that - at this time - I've completely skipped day 19, this was satisfying.
+
+#### Day 21 ([puzzle](https://adventofcode.com/2021/day/21), [solution](./src/solution/day21.js))
+
+I have no shame admitting today's puzzle was over my head. Not part 1, mind you, that was so simple it's barely worth
+discussing. The only thing I could reason about part 2 is that it was probably like [Day 14](#day-14-puzzle-solution)
+which itself was like [Day 6](#day-6-puzzle-solution). But that's it. I just couldn't visualize what needed to happen,
+so I hit up [Reddit](https://www.reddit.com/r/adventofcode/comments/rl6p8y/2021_day_21_solutions/) to get my learning
+on.
+
+Even now, I was a bit stumped. A lot of the code and solutions presented had terrible readability/discoverability. Even
+if it's a great solution, I'm not stepping through code with variables like `newPos` and `aScore` and, I kid you not,
+there's a Java solution in there with this line
+
+```java
+dp[u][Math.min(DIRAC_DICE_WINNING_SCORE, v + newLoc + 1)][i][newLoc][1 - k] += dp[u][v][i][j][k] * DU[w];
+```
+
+😱 Anyway, so I kept poking around for solutions that were not only readable but something that I *understood*. I wasn't
+on the hunt for the fastest implementation, I just wanted something I could grok. Eventually, from finding a few gems, I
+started to wrap my head around it. I've [discussed before](#day-15-puzzle-solution) that I have a hard time seeing DP
+solutions and this seems to be an example of that. I'm pretty good at visualizing entire solutions, but doing so when
+the solution space is too big and you have to extrapolate the whole from a tiny piece - yeah, my brain is not good at
+that.
+
+I also saw a lot of solutions using the same, pre-computed list of values - something roughly like this:
+
+```json
+{"3": 1, "4": 3, "5": 6, "6": 7, "7": 6, "8": 3, "9": 1}
+```
+
+Which seemed [like magic](https://en.wikipedia.org/wiki/Magic_number_(programming)) so I set out to understand that as
+well.
+
+So, the code I have in my part 2 solution is the best version I could cobble together of an approach I understand. I
+realize it's not the fastest and that many solutions used memoization (which I could never quite wrap my head around†)
+and, indeed, this approach is not fast, taking about 10 seconds on average to solve. Still, I actually *get it* and did
+my level best to write sensible symbol names and good documentation. I do like, however, that it's fairly terse.
+
+† Not memoization writ-large, I get that. I just couldn't (and still can't) "see" what the memo stores and how it saves
+time in regard to this puzzle.
