@@ -47,7 +47,10 @@ try {
     if (err) {
       throw err;
     }
+    const label = `Day ${command.day}, Part ${command.part}`;
+    console.time(label);
     const puzzleResult = runner(data.trim(" \n"));
+    console.timeEnd(label);
     console.log(puzzleResult);
     process.exit(0);
   });
