@@ -469,7 +469,7 @@ function binding to get some polymorphic behavior.
 So, what to do about part 2? Consider these reboot steps:
 
 ```
-on x=2..6,y=3..7 
+on x=2..6,y=3..8 
 on x=4..9,y=1..5
 ```
 
@@ -478,7 +478,7 @@ Literally mapped, where `*` is an `on` cube and `&` is overlapping `on` cubes, i
 ```
 First Cuboid                Second Added                Final Result         
 9 |                         9 |                         9 |                          
-8 |                         8 |                         8 |                          
+8 |   * * * * *             8 |   * * * * *             8 |   * * * * *              
 7 |   * * * * *             7 |   * * * * *             7 |   * * * * *             
 6 |   * * * * *             6 |   * * * * *             6 |   * * * * *             
 5 |   * * * * *             5 |   * * & & & * * *       5 |   * * * * * * * *       
@@ -509,8 +509,8 @@ compositions of cubes):
 1a) 1st Iteration               2a) 2nd Iteration               2b) 2nd Iteration
 Add first cuboid                Start blank, add 2nd cuboid     Re-add 1st cuboid, overlap found
 9 |                             9 |                             9 |
-8 |                             8 |                             8 |
-7 |   +--------+                7 |                             7 |   +--------+
+8 |   +--------+                8 |                             8 |   +--------+
+7 |   |        |                7 |                             7 |   |        |
 6 |   |        |                6 |                             6 |   |        |
 5 |   |        |                5 |       +----------+          5 |   |   +----|-----+
 4 |   |        |                4 |       |          |          4 |   |   |    |     |
@@ -524,10 +524,10 @@ Add first cuboid                Start blank, add 2nd cuboid     Re-add 1st cuboi
 Slice first cuboid to fit       Slice remaining first cuboid    (If the first cuboid was
 around the 2nd (1st pass)       around the 2nd (2nd pass)       from an "off" step)
 9 |                             9 |                             9 |
-8 |                             8 |                             8 |
-7 |   +--++----+                7 |   +--++----+                7 |   +--++----+
-6 |   |  ||    |                6 |   |  ||    |                6 |   |  ||    |
-5 |   |  ||----|-----+          5 |   |  |+----+-----+          5 |   |  |+----+
+8 |   +--++----+                8 |   +--++----+                8 |   +--++----+
+7 |   |  ||    |                7 |   |  ||    |                7 |   |  ||    |
+6 |   |  ||    |                6 |   |  |+----+                6 |   |  |+----+
+5 |   |  ||----|-----+          5 |   |  |+----+-----+          5 |   |  |
 4 |   |  ||    |     |          4 |   |  ||          |          4 |   |  |
 3 |   +--++----+     |          3 |   +--+|          |          3 |   +--+
 2 |       |          |          2 |       |          |          2 |
@@ -537,9 +537,9 @@ around the 2nd (1st pass)       around the 2nd (2nd pass)       from an "off" st
 ```
 
 By adding the newest cuboid first, all existing cuboids are forced to fit around it, breaking themselves up into
-smaller cuboids until they fit. In **fig 2c** we can see that a new cuboid of `x=2..3,y=3..7` has been created, and the
-original had this subtracted from it, making it `x=4..6,y=3..7`. Finally, in **fig 3a** that remainder is split again
-into a new cuboid of `x=4..6,y=6..7` with the remainder of *that* being eliminated completely. Also notice in **fig 3b**
+smaller cuboids until they fit. In **fig 2c** we can see that a new cuboid of `x=2..3,y=3..8` has been created, and the
+original had this subtracted from it, making it `x=4..6,y=3..8`. Finally, in **fig 3a** that remainder is split again
+into a new cuboid of `x=4..6,y=6..8` with the remainder of *that* being eliminated completely. Also notice in **fig 3b**
 how it works even if the step is an `off` command?
 
 So, by the next iteration, we have more, smaller cuboids, but they are all `on` and non-overlapping. Pretty neat, eh?
