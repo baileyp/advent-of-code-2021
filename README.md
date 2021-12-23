@@ -458,3 +458,94 @@ my level best to write sensible symbol names and good documentation. I do like, 
 
 † Not memoization writ-large, I get that. I just couldn't (and still can't) "see" what the memo stores and how it saves
 time in regard to this puzzle.
+
+#### Day 22 ([puzzle](https://adventofcode.com/2021/day/22), [solution](./src/solution/day22.js))
+
+I could just *feel* it when the instruction for part 1 said "ignore the big numbers" that this was going to be another
+"a literal mapping of the solution space won't work for part 2" puzzle, and I was right. Still, I didn't want to do the
+heavy lifting for part 1, so I implemented a literal solution anyway, and I think it's quite tidy, even using a little
+function binding to get some polymorphic behavior. 
+
+So, what to do about part 2? Consider these reboot steps:
+
+```
+on x=2..6,y=3..7 
+on x=4..9,y=1..5
+```
+
+Literally mapped, where `*` is an `on` cube and `&` is overlapping `on` cubes, it looks like this:
+
+```
+First Cuboid                Second Added                Final Result         
+9 |                         9 |                         9 |                          
+8 |                         8 |                         8 |                          
+7 |   * * * * *             7 |   * * * * *             7 |   * * * * *             
+6 |   * * * * *             6 |   * * * * *             6 |   * * * * *             
+5 |   * * * * *             5 |   * * & & & * * *       5 |   * * * * * * * *       
+4 |   * * * * *             4 |   * * & & & * * *       4 |   * * * * * * * *       
+3 |   * * * * *             3 |   * * & & & * * *       3 |   * * * * * * * *       
+2 |                         2 |       * * * * * *       2 |       * * * * * *       
+1 |                         1 |       * * * * * *       1 |       * * * * * *                
+0 +-------------------      0 +-------------------      0 +-------------------       
+  0 1 2 3 4 5 6 7 8 9         0 1 2 3 4 5 6 7 8 9         0 1 2 3 4 5 6 7 8 9        
+```
+
+To me, this is how I think most people would visualize this evolution taking shape - just intersecting and overlapping
+areas and/or volumes.
+
+But this is problematic for large data sets - keeping track of each cube individually. As was the case with
+[lanternfish](#day-6-puzzle-solution), [polymers](#day-14-puzzle-solution), and [dice games](#day-21-puzzle-solution),
+in order for the solution space to stay manageable, we need to treat aggregates as... well... aggregates; as single
+units. Here's how I applied this concept to today's puzzle. 
+
+Instead of modeling each cube, the idea is to just maintain a set of cuboids themselves†. At each iteration (that is,
+at each reboot step), start with a blank core and add just the cuboid defined by that step (Note: if it's an `off`
+instruction, no initial cuboid is added but its dimensions are still important - more on that later). After the step's
+cuboid is added, then all *previously added* cuboids are processed in turn. If they intersect with the step's cuboid,
+then they are split into smaller ones. Here's how that looks in 2D (note that cuboids are treated as wholes, not
+compositions of cubes):
+
+```
+1a) 1st Iteration               2a) 2nd Iteration               2b) 2nd Iteration
+Add first cuboid                Start blank, add 2nd cuboid     Re-add 1st cuboid, overlap found
+9 |                             9 |                             9 |
+8 |                             8 |                             8 |
+7 |   +--------+                7 |                             7 |   +--------+
+6 |   |        |                6 |                             6 |   |        |
+5 |   |        |                5 |       +----------+          5 |   |   +----|-----+
+4 |   |        |                4 |       |          |          4 |   |   |    |     |
+3 |   +--------+                3 |       |          |          3 |   +--------+     |
+2 |                             2 |       |          |          2 |       |          |
+1 |                             1 |       +----------+          1 |       +----------+
+0 +-------------------          0 +-------------------          0 +-------------------
+  0 1 2 3 4 5 6 7 8 9             0 1 2 3 4 5 6 7 8 9             0 1 2 3 4 5 6 7 8 9
+        
+2c) 2nd Iteration               3a) 2nd Iteration               3b) 2nd Iteration
+Slice first cuboid to fit       Slice remaining first cuboid    (If the first cuboid was
+around the 2nd (1st pass)       around the 2nd (2nd pass)       from an "off" step)
+9 |                             9 |                             9 |
+8 |                             8 |                             8 |
+7 |   +--++----+                7 |   +--++----+                7 |   +--++----+
+6 |   |  ||    |                6 |   |  ||    |                6 |   |  ||    |
+5 |   |  ||----|-----+          5 |   |  |+----+-----+          5 |   |  |+----+
+4 |   |  ||    |     |          4 |   |  ||          |          4 |   |  |
+3 |   +--++----+     |          3 |   +--+|          |          3 |   +--+
+2 |       |          |          2 |       |          |          2 |
+1 |       +----------+          1 |       +----------+          1 |
+0 +-------------------          0 +-------------------          0 +-------------------
+  0 1 2 3 4 5 6 7 8 9             0 1 2 3 4 5 6 7 8 9             0 1 2 3 4 5 6 7 8 9
+```
+
+By adding the newest cuboid first, all existing cuboids are forced to fit around it, breaking themselves up into
+smaller cuboids until they fit. In **fig 2c** we can see that a new cuboid of `x=2..3,y=3..7` has been created, and the
+original had this subtracted from it, making it `x=4..6,y=3..7`. Finally, in **fig 3a** that remainder is split again
+into a new cuboid of `x=4..6,y=6..7` with the remainder of *that* being eliminated completely. Also notice in **fig 3b**
+how it works even if the step is an `off` command?
+
+So, by the next iteration, we have more, smaller cuboids, but they are all `on` and non-overlapping. Pretty neat, eh?
+
+I also messed around with [JSDoc's @typedef tag](https://jsdoc.app/tags-typedef.html) and my IDE (WebStorm) played along
+very well - nice!
+
+† I checked this with my puzzle input. The answer, in terms of cubes, was over 1.2 quintillion, but the number of
+cuboids at the end was only 3,390.
