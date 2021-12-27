@@ -625,28 +625,21 @@ Still, I had figured out the rules for each step of the program, and for mine th
 
 ```
 Step    Z after Step                        Rules From step
------------------------------------------------------------------
+----------------------------------------------------------------------------
  1       z1 = w1 + 1
  2       z2 = z1 * 26 + w2 + 11
  3       z3 = z2 * 26 + w3 + 1
  4       z4 = z3 * 26 + w4 + 11
- 5       z5 = z3 (when w5 === w4 + 3)       w4 has to be 1..6
-                                            w5 has to be w4 + 3
- 6       z6 = z2 (when w6 === w3 - 4)       w3 has to be 5..9
-                                            w6 has to be w3 - 4
+ 5       z5 = z3 (when w5 === w4 + 3)       w4 === 1..6, w5 = w4 + 3
+ 6       z6 = z2 (when w6 === w3 - 4)       w3 === 5..9, w6 = w3 - 4
  7       z7 = z2 * 26 + w7 + 7
- 8       z8 = z2 (when w8 === w7 - 6)       w8 has to be 1..3
-                                            w7 has to be w8 + 6
+ 8       z8 = z2 (when w8 === w7 - 6)       w8 === 1..3, w7 = w8 + 6
  9       z9 = z2 * 26 + w9 + 6
-10      z10 = z2 (when w10 === w9 + 5)      w9 has to be 1..4
-                                            w10 has to be w9 + 5
+10      z10 = z2 (when w10 === w9 + 5)      w9 === 1..4, w10 = w9 + 5
 11      z11 = z2 * 26 + w9 + 6
-12      z12 = z2 (when w12 === w11 + 2)     w11 has to be 1..7
-                                            w12 has to be w11 + 2
-13      z13 = z1 (when w13 === w2 + 7)      w2 has to be 1..2
-                                            w13 has to be w3 + 7
-14      z14 = 0  (when w14 === w1 - 7)      w1 must be 8..9
-                                            w14 must be w1 - 7
+12      z12 = z2 (when w12 === w11 + 2)     w11 === 1..7, w12 = w11 + 2
+13      z13 = z1 (when w13 === w2 + 7)      w2 === 1..2, w13 = w2 + 7
+14      z14 = 0  (when w14 === w1 - 7)      w1 === 8..9, w14 = w1 - 7
 ```
 
 Given that I know knew exactly how to solve the problem but zero clue how to turn it into a program, I just solved it
