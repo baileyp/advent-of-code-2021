@@ -549,3 +549,111 @@ very well - nice!
 
 † I checked this with my puzzle input. The answer, in terms of cubes, was over 1.2 quintillion, but the number of
 cuboids at the end was only 3,390.
+
+#### Day 23 ([puzzle](https://adventofcode.com/2021/day/23), [solution](./src/solution/day23.js))
+
+Haven't worked on this yet, but wondering if a graph structure like below would be useful?
+
+```
+     A   B   C   D
+     |   |   |   |
+     A   B   C   D
+     |   |   |   |
+     E   E   E   E
+    / \ / \ / \ / \
+   H   H   H   H   H
+  /                 \
+ H                   H
+```
+
+#### Day 24 ([puzzle](https://adventofcode.com/2021/day/24), [solution](./src/solution/day24.js))
+
+I'm kind of flummoxed, here, to be honest. I barely grasp [monads](https://en.wikipedia.org/wiki/Monad_(functional_programming)),
+even after reading about them for an hour, and as someone who has never been a functional programmer, they're just not
+in my toolbox. At all. 
+
+Still, I figured I'd give it a go and even plucked [code from a tutorial](https://modernweb.com/a-gentle-introduction-to-monads-in-javascript/)
+to get started, and I actually managed to get a really simple solution that will happily execute any ALU program you
+throw at it.
+
+But when it came to the discovery part, well, I didn't see how to do it other than crawling through the program by hand.
+Perhaps this is where my understanding of the concepts involved, such as the monad laws, betray me, but I was
+determined to get some insight.
+
+After walking through the instructions in my puzzle input, a few things became immediately about the variables:
+
+- Variable `w` is used exclusively for reading and storing input.
+- Variables `x` and `y` are always reset to `0` between `inp` instructions, meaning they are truly variables and are
+  used for computation per input in a very assembler-like way.
+- Variable `z` is used exclusively for storing output, and is effectively the "state" of the program across inputs.
+
+Additionally, another other pattern emerged: Each set of instructions between `inp` ones, which I will call **steps**,
+distill down to one of two types:
+
+- A straight calculation step: return the current `z * 26` plus `w` ± a magic number
+- A decision step: When `z % 26` ± a magic number is equal to `w`, return the rounded-down remainder of `z / 26`, else
+  return the above calculation
+
+The effect of a "successful" decision was effectively a rewind. Consider the following:
+
+```javascript
+const w1 = 1;
+const w2 = 8;
+
+// Step 1
+let z = 2;
+z = z * 26 + w1 + 11;
+// z === 68
+
+// Step 2
+if (z % 26 - 4 === w2) {
+  z = Math.floor(z / 26);
+  // z === 2
+}
+```
+
+See how in step 2 that `z % 26 === w1 + 11`? So that as long as `w2 === w1 + 7` then the condition is satisfied, and `z`
+gets set back to `2` as a result? This is what I mean by "rewind." When the rewinds aren't successful, then `z` just
+keeps growing by factors of 26. Therefore, the goal of the puzzle is to find model numbers that will trip all of these
+rewind steps. Question is... how do I make a monadic program do that?
+
+![Beats Me.](https://media1.giphy.com/media/3o6UBil4zn1Tt03PI4/giphy.gif?cid=ecf05e474j9pdczrek27o3oz7jeawggljj9s26dhgtdx7ifl&rid=giphy.gif&ct=g)
+
+*Credit: [giphy](https://giphy.com/gifs/steve-martin-3o6UBil4zn1Tt03PI4)*
+
+Still, I had figured out the rules for each step of the program, and for mine they looked like this (steps and input
+numbers count down):
+
+```
+Step    Z after Step                        Rules From step
+-----------------------------------------------------------------
+14      z14 = w14 + 1
+13      z13 = z14 * 26 + w13 + 11
+12      z12 = z13 * 26 + w12 + 1
+11      z11 = z12 * 26 + w11 + 11
+10      z10 = z12 (when w10 === w11 + 3)    w11 has to be 1..6
+                                            w10 has to be w11 + 3
+09       z9 = z13 (when w9 === w12 - 4)     w12 has to be 5..9
+                                            w9 has to be w12 - 4 
+08       z8 = z13 * 26 + w8 + 7 
+07       z7 = z13 (when w7 === w8 - 6)      w7 has to be 1..3
+                                            w8 has to be w7 + 6
+06       z6 = z13 * 26 + w6 + 6 
+05       z5 = z13 (when w5 === w6 + 5)      w6 has to be 1..4
+                                            w5 has to be w6 + 5
+04       z4 = z13 * 26 + w6 + 6 
+03       z3 = z13 (when w3 === w4 + 2)      w4 has to be 1..7
+                                            w3 has to be w4 + 2
+02       z2 = z14 (when w2 === w13 + 7)     w13 has to be 1..2
+                                            w2 has to be w12 + 7                                        
+01       z1 = 0   (when w1 === w14 - 7)     w14 must be 8..9
+                                            w1 must be w14 - 7
+```
+
+Given that I know knew exactly how to solve the problem but zero clue how to turn it into a program, I just solved it
+by hand, which felt a bit like doing a Sudoku puzzle. So, for the first time ever, I think, in my personal history of
+doing Advent of Code, I solved both parts of a day's puzzles without using code to do it. ***Weird***
+
+I'm still committing the program I mentioned before, but to be clear, all it does is run a program against an input
+value, it does absolutely zero solving of any kind. I didn't even bother analyzing the time/space complexity since it's
+kinda moot.
