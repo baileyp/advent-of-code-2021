@@ -621,33 +621,32 @@ rewind steps. Question is... how do I make a monadic program do that?
 
 *Credit: [giphy](https://giphy.com/gifs/steve-martin-3o6UBil4zn1Tt03PI4)*
 
-Still, I had figured out the rules for each step of the program, and for mine they looked like this (steps and input
-numbers count down):
+Still, I had figured out the rules for each step of the program, and for mine they looked like this:
 
 ```
 Step    Z after Step                        Rules From step
 -----------------------------------------------------------------
-14      z14 = w14 + 1
-13      z13 = z14 * 26 + w13 + 11
-12      z12 = z13 * 26 + w12 + 1
-11      z11 = z12 * 26 + w11 + 11
-10      z10 = z12 (when w10 === w11 + 3)    w11 has to be 1..6
-                                            w10 has to be w11 + 3
-09       z9 = z13 (when w9 === w12 - 4)     w12 has to be 5..9
-                                            w9 has to be w12 - 4 
-08       z8 = z13 * 26 + w8 + 7 
-07       z7 = z13 (when w7 === w8 - 6)      w7 has to be 1..3
-                                            w8 has to be w7 + 6
-06       z6 = z13 * 26 + w6 + 6 
-05       z5 = z13 (when w5 === w6 + 5)      w6 has to be 1..4
-                                            w5 has to be w6 + 5
-04       z4 = z13 * 26 + w6 + 6 
-03       z3 = z13 (when w3 === w4 + 2)      w4 has to be 1..7
-                                            w3 has to be w4 + 2
-02       z2 = z14 (when w2 === w13 + 7)     w13 has to be 1..2
-                                            w2 has to be w12 + 7                                        
-01       z1 = 0   (when w1 === w14 - 7)     w14 must be 8..9
-                                            w1 must be w14 - 7
+01       z1 = w1 + 1
+02       z2 = z1 * 26 + w2 + 11
+03       z3 = z2 * 26 + w3 + 1
+04       z4 = z3 * 26 + w4 + 11
+05       z5 = z3 (when w5 === w4 + 3)       w4 has to be 1..6
+                                            w5 has to be w4 + 3
+06       z6 = z2 (when w6 === w3 - 4)       w3 has to be 5..9
+                                            w6 has to be w3 - 4
+07       z7 = z2 * 26 + w7 + 7
+08       z8 = z2 (when w8 === w7 - 6)       w8 has to be 1..3
+                                            w7 has to be w8 + 6
+09       z9 = z2 * 26 + w9 + 6
+10      z10 = z2 (when w10 === w9 + 5)      w9 has to be 1..4
+                                            w10 has to be w9 + 5
+11      z11 = z2 * 26 + w9 + 6
+12      z12 = z2 (when w12 === w11 + 2)     w11 has to be 1..7
+                                            w12 has to be w11 + 2
+13      z13 = z1 (when w13 === w2 + 7)      w2 has to be 1..2
+                                            w13 has to be w3 + 7
+14      z14 = 0  (when w14 === w1 - 7)      w1 must be 8..9
+                                            w14 must be w11 - 7
 ```
 
 Given that I know knew exactly how to solve the problem but zero clue how to turn it into a program, I just solved it
