@@ -649,3 +649,23 @@ doing Advent of Code, I solved both parts of a day's puzzles without using code 
 I'm still committing the program I mentioned before, but to be clear, all it does is run a program against an input
 value, it does absolutely zero solving of any kind. I didn't even bother analyzing the time/space complexity since it's
 kinda moot.
+
+#### Day 25 ([puzzle](https://adventofcode.com/2021/day/25), [solution](./src/solution/day25.js))
+
+Last day! Well, at least in puzzle order. As of this writing, I have yet to complete Day 19 and Day 23. Still, this last
+day's puzzle was enjoyable. Not particularly challenging, I suppose. I did again play around with a different way of
+representing objects on a grid that I think suited this puzzle. Instead of mapping the entire solution space, *or*
+instead of plotting each sea cucumber in a single `Map`, I used a distinct `Set` for each herd. Obviously this would not
+scale well if there were many herds, but given the parameters of the problem I like the tidiness of a) being able to
+simply process the east herd, then the south, and b) keeping the solution space to just sea cucumbers and where they're
+at.
+
+From there it's a pretty on-the-nose looping algorithm with a composite return value that is used to signal when the
+herds have stopped moving. Handling the **strong water currents** requirement was trivial. It did take longer to return
+a result than I expected - somewhere between 5 and 6 seconds - but after I did the math, my puzzle input plotted 9,561
+total sea cucumbers, and the iteration at which they stopped moving was over 500, which puts the number of steps will
+into the 5+ million range, so I guess I can't complain about a loop per *μs*.
+
+### Final Thoughts 🤔
+
+TBD
